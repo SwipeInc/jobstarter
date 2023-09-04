@@ -23,3 +23,31 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('SignUpWithUI', () => {
+  cy.viewport(1920, 1080);
+  cy.visit(Cypress.env('endpoint'));
+  cy.contains('Sign Up').click();
+  cy.get('input[name="email"]').type(Cypress.env('email'));
+  cy.get('input[name="confirm_email"]').type(Cypress.env('email'));
+  cy.get('input[id="first_name"]').type(Cypress.env('name'));
+});
+
+Cypress.Commands.add('LoginWithUI', () => {
+  cy.viewport(1920, 1080);
+  cy.visit(Cypress.env('endpoint'));
+  cy.contains('Sign in').click();
+  cy.get('input[type="email"]').type(Cypress.env('email'));
+  cy.get('input[type="password"]').type(Cypress.env('password'));
+  cy.get('button[type=submit]').click();
+});
+
+Cypress.Commands.add('LoginWithUIUns', () => {
+  cy.viewport(1920, 1080);
+  cy.visit(Cypress.env('endpoint'));
+  cy.contains('Sign in').click();
+  cy.get('input[type="email"]').type(Cypress.env('email'));
+  cy.get('input[type="password"]').type('This is wrong');
+  cy.get('button[type=submit]').click();
+  cy.contains('div', /^Invalid login credentials./).should('be.visible');
+});
