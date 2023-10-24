@@ -1,3 +1,10 @@
+require('cypress-xpath');
+import customSelectors from '..//support//customSelectors';
+
+var moment = require('moment'); // require
+
+const cs = new customSelectors();
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -28,18 +35,9 @@ Cypress.Commands.add('SignUpWithUI', () => {
   cy.viewport(1920, 1080);
   cy.visit(Cypress.env('endpoint'));
   cy.contains('Sign Up').click();
-  cy.get('input[name="email"]').type('reinhardttest@qa.team');
-  cy.get('input[name="confirm_email"]').type('reinhardttest@qa.team');
-
-  //Commented out the below for testing
-  // cy.get('input[name="email"]').type(Cypress.env('email'));
-  // cy.get('input[name="confirm_email"]').type(Cypress.env('email'));
-
-  cy.get('input[id="first_name"]').type('JobStarterTester');
-
-  //For some reason the below is not being identified in the env file.
-  //cy.get('input[id="first_name"]').type(Cypress.env('name'));
-
+  cy.get('input[name="email"]').type(Cypress.env('email'));
+  cy.get('input[name="confirm_email"]').type(Cypress.env('email'));
+  cy.get('input[id="first_name"]').type(Cypress.env('name'));
   cy.contains('Continue').click();
   cy.get('input[placeholder="Add a password"]').type(Cypress.env('password'));
   cy.get('input[placeholder="Confirm password"]').type(Cypress.env('password'));
@@ -65,16 +63,15 @@ Cypress.Commands.add('ConfirmSignUpAccount', () => {
 
 Cypress.Commands.add('ActivateUserCMS', () => {
   cy.viewport(1920, 1080);
-  cy.visit('https://api-staging.jobstarter.org.za/admin_users/sign_in');
-  cy.get('input[id="admin_user_email"]').type('reinhardt@swipeix.com');
-  cy.get('input[name="admin_user[password]"]').type('Imawesome1!');
+  cy.visit(Cypress.env('cmsEndpoint'));
+  cy.get('input[id="admin_user_email"]').type(Cypress.env('cmsUsername'));
+  cy.get('input[name="admin_user[password]"]').type(Cypress.env('cmsPassword'));
   cy.get('input[type="submit"]').click();
   cy.contains('Candidates').click();
   cy.get('a[href="/candidates"]').click();
-  cy.get('input[id="q_email_or_first_name_or_last_name_or_username_or_mobile_number_cont"]').type('jstester4@qa.team');
+  cy.get('input[id="q_email_or_first_name_or_last_name_or_username_or_mobile_number_cont"]').type(Cypress.env('email'));
   cy.get('button[type="submit"]').click();
-  cy.get('td').should('contain.text', 'jstester4@qa.team');
-  // cy.contains('td').should('have.text', 'reinhardttest@qa.team');
+  cy.get('td').should('contain.text', Cypress.env('email'));
   cy.get('a[title="Edit"]').eq(1).click();
 });
 
@@ -112,4 +109,130 @@ Cypress.Commands.add('SetGoalsAfterAccountConfirmation', () => {
   cy.get('button[type="submit"]').click();
   cy.wait(1000);
   cy.get('button[type="submit"]').click();
+});
+
+Cypress.Commands.add('AddInfoToCV', () => {
+  //click on My Profile/CV
+  cy.contains('div', 'My Profile/CV').click();
+
+  //get rid of the assistant character
+  cy.get('div[class="absolute bottom-0 left-0 md:ml-8 min-h-0 min-w-0 max-h-screen max-w-screen-xl"]')
+    .should('exist')
+    .then(($button) => {
+      if ($button.length > 0) {
+        // The button exists, so click it
+        cy.contains('div', 'Dismiss').click();
+      }
+    });
+
+  //click edit button on CV
+  cy.contains('button', 'Edit').click();
+
+  //get rid of the assistant character
+  cy.get('div[class="absolute bottom-0 left-0 md:ml-8 min-h-0 min-w-0 max-h-screen max-w-screen-xl"]')
+    .should('exist')
+    .then(($button) => {
+      if ($button.length > 0) {
+        // The button exists, so click it
+        cy.contains('div', 'No thanks').click();
+      }
+    });
+
+  //enter a professional statement
+  cy.get('textarea[name="statement"]').type(Cypress.env('cvStatement'));
+
+  //enter mobile number
+  cy.get('input[name="mobile_number"]').type(Cypress.env('mobile_number'));
+
+  //Add a soft skill
+  cy.contains('div', 'Add a soft skill').click();
+  cy.xpath(cs.typeSkillClick).eq(0).click();
+  cy.xpath(cs.typeSkill).type('Active listening', { force: true });
+  cy.contains('div', 'Active listening').click();
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //add a hard skill
+  cy.contains('div', 'Add a hard skill').click();
+  cy.xpath(cs.typeSkillClick).eq(0).click();
+  cy.xpath(cs.typeSkill).type('Woodwork', { force: true });
+  cy.contains('div', 'Woodwork').click();
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //add 1 basic edication
+  cy.contains('div', 'Add basic education').click();
+  cy.xpath(cs.typeHighSchool).click().type('Beacon Hill');
+  cy.contains('div', 'Beacon Hill Secondary School').click({ force: true });
+  cy.xpath(cs.typeQualification).click();
+  cy.xpath(cs.selectQualli).click({ force: true });
+
+  //enter date for basic education
+  cy.contains('div', 'Year completed').click();
+  cy.xpath(cs.year1970).click({ force: true });
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //adding a short course
+  cy.xpath(cs.addShortCourse).click();
+  cy.get('input[name="institution_name"]').type(Cypress.env('institutionName'));
+  cy.get('input[name="course_name"]').type(Cypress.env('spell'));
+  cy.get('input[name="start_date"]').type('2022-05-07');
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //add interest
+  cy.xpath(cs.addInterest).click();
+  cy.get('textarea[placeholder="I like playing tennis"]').type(Cypress.env('interest'));
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //add achievements
+  cy.xpath(cs.addAchievements).click();
+  cy.get('textarea[placeholder="Class Representative in Grade 8."]').type(Cypress.env('achievement'));
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //add work experience
+  cy.xpath(cs.addWorkExperience).click();
+  cy.get("input[name='institution']").type(Cypress.env('WECompany'));
+  cy.get("input[name='position']").type(Cypress.env('WECompany'));
+  cy.get('input[name="start_date"]').type('2017-11-07');
+  cy.get('textarea[placeholder="Write your job description here"]').type(Cypress.env('WEJobDescription'));
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //add reference
+  cy.xpath(cs.addReference).click();
+  cy.get("input[name='name']").type(Cypress.env('refName'));
+  cy.get("input[name='company']").type(Cypress.env('refCompany'));
+  cy.get("input[name='number']").type(Cypress.env('refNumber'));
+  cy.get("input[name='email_address']").type(Cypress.env('refEmail'));
+  cy.contains('button[type="submit"]', 'Add').click();
+
+  //select YDO
+  cy.xpath(cs.selectYDO).click();
+  cy.xpath(cs.selectArmy).click();
+
+  //enter address
+  cy.get('input[name="address_line_1"]').type(Cypress.env('address_line_1'));
+  cy.wait(1500);
+  cy.xpath(cs.addressSelect).click();
+
+  //select a language
+  cy.xpath(cs.languageSelect).eq(0).click();
+  cy.xpath(cs.selectEnglish).click();
+
+  //Select a gender
+  cy.xpath(cs.genderSelect).eq(0).click();
+  cy.xpath(cs.selectFemale).click();
+
+  //Select a race
+  cy.xpath(cs.raceSelect).eq(0).click();
+  cy.xpath(cs.selectAfrican).click();
+
+  //save CV
+  cy.contains('div', 'Save').click();
+
+  //refresh the page
+  cy.reload();
+
+  cy.wait(5000);
+});
+
+Cypress.Commands.add('DownloadCV', () => {
+  cy.xpath(cs.downloadCV1).last().click();
 });
