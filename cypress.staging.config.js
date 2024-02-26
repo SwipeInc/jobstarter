@@ -2,6 +2,9 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   e2e: {
+    defaultCommandTimeout: 6000,
+    viewportWidth: 1920,
+    viewportHeight: 1080,
     env: {
       endpoint: 'https://staging.jobstarter.org.za/',
       email: 'jsauto@qa.team',
