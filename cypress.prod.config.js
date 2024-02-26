@@ -8,9 +8,9 @@ module.exports = defineConfig({
     viewportWidth: 1920,
     viewportHeight: 1080,
     env: {
-      endpoint: 'https://www.jobstarter.org.za/public-landing',
-      email: 'jsauto@qa.team',
-      password: 'P@ssw0rd1!',
+      endpoint: 'https://www.jobstarter.org.za',
+      email: 'reinhardtvanrooyen@gmail.com',
+      password: 'MyPassword1!',
       name: 'JobStarterTester',
       cmsPassword: 'Imawesome1!',
       cmsUsername: 'reinhardt@swipeix.com',
