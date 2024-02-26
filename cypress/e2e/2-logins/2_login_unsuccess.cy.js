@@ -4,7 +4,6 @@
 
 describe('Login with existing user', () => {
   beforeEach(() => {
-    cy.viewport(1920, 1080);
   });
   before(() => {});
 });

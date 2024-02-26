@@ -1,11 +1,16 @@
 const { defineConfig } = require('cypress');
 
+// these variables will get updated for prod as the scripts are built
+
 module.exports = defineConfig({
   e2e: {
+    defaultCommandTimeout: 6000,
+    viewportWidth: 1920,
+    viewportHeight: 1080,
     env: {
-      endpoint: 'https://staging.jobstarter.org.za/',
-      email: 'jsauto@qa.team',
-      password: 'P@ssw0rd1!',
+      endpoint: 'https://www.jobstarter.org.za',
+      email: 'reinhardtvanrooyen@gmail.com',
+      password: 'MyPassword1!',
       name: 'JobStarterTester',
       cmsPassword: 'Imawesome1!',
       cmsUsername: 'reinhardt@swipeix.com',

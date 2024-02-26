@@ -4,11 +4,11 @@
 
 describe('Login with existing user', () => {
   beforeEach(() => {
-    cy.viewport(1920, 1080);
   });
   before(() => {});
 });
 
 it('User is logged in', () => {
   cy.LoginWithUI();
+  cy.url().should('include', 'candidate-hub/wall');
 });

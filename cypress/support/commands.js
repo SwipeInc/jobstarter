@@ -32,7 +32,6 @@ const cs = new customSelectors();
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('SignUpWithUI', () => {
-  cy.viewport(1920, 1080);
   cy.visit(Cypress.env('endpoint'));
   cy.contains('Sign Up').click();
   cy.get('input[name="email"]').type(Cypress.env('email'));
@@ -46,7 +45,6 @@ Cypress.Commands.add('SignUpWithUI', () => {
 });
 
 Cypress.Commands.add('ConfirmSignUpAccount', () => {
-  cy.viewport(1920, 1080);
   cy.visit('https://qa.team/');
   cy.get('input[type="text"]').type('reinhardttest');
   // cy.get('input[name="email"]').type(Cypress.env('email'));
@@ -62,7 +60,6 @@ Cypress.Commands.add('ConfirmSignUpAccount', () => {
 });
 
 Cypress.Commands.add('ActivateUserCMS', () => {
-  cy.viewport(1920, 1080);
   cy.visit(Cypress.env('cmsEndpoint'));
   cy.get('input[id="admin_user_email"]').type(Cypress.env('cmsUsername'));
   cy.get('input[name="admin_user[password]"]').type(Cypress.env('cmsPassword'));
@@ -76,7 +73,6 @@ Cypress.Commands.add('ActivateUserCMS', () => {
 });
 
 Cypress.Commands.add('LoginWithUI', () => {
-  cy.viewport(1920, 1080);
   cy.visit(Cypress.env('endpoint'));
   cy.contains('Sign in').click();
   cy.get('input[type="email"]').type(Cypress.env('email'));
@@ -85,7 +81,6 @@ Cypress.Commands.add('LoginWithUI', () => {
 });
 
 Cypress.Commands.add('LoginWithUIUns', () => {
-  cy.viewport(1920, 1080);
   cy.visit(Cypress.env('endpoint'));
   cy.contains('Sign in').click();
   cy.get('input[type="email"]').type(Cypress.env('email'));

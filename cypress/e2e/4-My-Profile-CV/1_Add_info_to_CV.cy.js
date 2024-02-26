@@ -4,7 +4,6 @@ const path = require('path');
 
 describe('Adding information to My Profile CV', () => {
   beforeEach(() => {
-    cy.viewport(1920, 1080);
   });
   before(() => {});
 });
