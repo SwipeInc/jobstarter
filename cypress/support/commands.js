@@ -231,3 +231,11 @@ Cypress.Commands.add('AddInfoToCV', () => {
 Cypress.Commands.add('DownloadCV', () => {
   cy.xpath(cs.downloadCV1).last().click();
 });
+
+Cypress.Commands.add('searchInfoHub', (searchValue) => {
+  // must be logged in
+  cy.contains('Information Hub').click();
+  cy.get('.opacity-100').click(); // clear popup
+  cy.get('input[name="search"]').type(searchValue);
+  cy.get('.mx-10 > .flex').click();
+});

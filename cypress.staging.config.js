@@ -27,6 +27,8 @@ module.exports = defineConfig({
       refCompany: 'Testing Company',
       refNumber: '0791236487',
       refEmail: 'testingemail@tc.com',
+
+      validInfoSearchTerm: 'test'
     },
     setupNodeEvents(on, config) {
       // implement node event listeners here
