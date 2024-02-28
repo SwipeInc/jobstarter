@@ -231,3 +231,23 @@ Cypress.Commands.add('AddInfoToCV', () => {
 Cypress.Commands.add('DownloadCV', () => {
   cy.xpath(cs.downloadCV1).last().click();
 });
+
+
+Cypress.Commands.add('clearCVField', (selector, errorMessage, helperVisible, ifClear) => {
+  if(helperVisible){
+    cy.get('.opacity-100').click();
+    cy.wait(2000);
+  }
+  if(ifClear){
+    cy.get(selector).clear();
+  } else {
+    cy.get(selector).click();
+  }
+
+  cy.contains("Save").click();
+  cy.wait(2000);
+  cy.contains("Download CV").click();
+  cy.contains(`${errorMessage} in your Profile to download the CV`)
+      .should('be.visible');
+});
+
