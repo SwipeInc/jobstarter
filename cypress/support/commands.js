@@ -234,6 +234,7 @@ Cypress.Commands.add('DownloadCV', () => {
 
 
 Cypress.Commands.add('clearCVField', (selector, errorMessage, helperVisible, ifClear) => {
+  cy.contains("Edit").click();
   if(helperVisible){
     cy.get('.opacity-100').click();
     cy.wait(2000);
