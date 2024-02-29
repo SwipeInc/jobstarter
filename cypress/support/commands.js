@@ -252,3 +252,12 @@ Cypress.Commands.add('clearCVField', (selector, errorMessage, helperVisible, ifC
       .should('be.visible');
 });
 
+=======
+Cypress.Commands.add('searchInfoHub', (searchValue) => {
+  // must be logged in
+  cy.contains('Information Hub').click();
+  cy.get('.opacity-100').click(); // clear popup
+  cy.get('input[name="search"]').type(searchValue);
+  cy.get('.mx-10 > .flex').click();
+});
+
