@@ -19,6 +19,7 @@ describe('Login to site', () => {
     cy.clearCVField(':nth-child(2) > :nth-child(2) > .h-full > .h-auto > .min-h-0 > .w-full > :nth-child(2)', 'Please add at least one Education & Training', false, false);
     cy.clearCVField('#hook-form > div.w-full > .p-5', 'Please complete your Professional Statement', false, true);
 
+    
   }); 
 });
 
