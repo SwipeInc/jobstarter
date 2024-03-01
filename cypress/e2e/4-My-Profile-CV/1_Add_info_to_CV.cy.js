@@ -8,7 +8,7 @@ describe('Adding information to My Profile CV', () => {
   before(() => {});
 });
 
-it('Log in, create cv ,download cv and verifyu download', () => {
+it('Log in, create cv ,download cv and verify download', () => {
   cy.LoginWithUI();
   cy.AddInfoToCV();
   cy.DownloadCV();
