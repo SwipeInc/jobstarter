@@ -5,6 +5,7 @@ module.exports = defineConfig({
     defaultCommandTimeout: 6000,
     viewportWidth: 1920,
     viewportHeight: 1080,
+    experimentalRunAllSpecs: true,
     env: {
       endpoint: 'https://staging.jobstarter.org.za/',
       email: 'jsauto@qa.team',
@@ -28,7 +29,10 @@ module.exports = defineConfig({
       refNumber: '0791236487',
       refEmail: 'testingemail@tc.com',
 
-      validInfoSearchTerm: 'test'
+      validInfoSearchTerm: 'test',
+
+
+      
     },
     setupNodeEvents(on, config) {
       // implement node event listeners here
