@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
+  projectId: 'u72496',
   e2e: {
     defaultCommandTimeout: 6000,
     viewportWidth: 1920,
@@ -30,9 +31,6 @@ module.exports = defineConfig({
       refEmail: 'testingemail@tc.com',
 
       validInfoSearchTerm: 'test',
-
-
-      
     },
     setupNodeEvents(on, config) {
       // implement node event listeners here

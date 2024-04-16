@@ -232,27 +232,24 @@ Cypress.Commands.add('DownloadCV', () => {
   cy.xpath(cs.downloadCV1).last().click();
 });
 
-
 Cypress.Commands.add('clearCVField', (selector, errorMessage, helperVisible, ifClear) => {
-  cy.contains("Edit").click();
-  if(helperVisible){
+  cy.contains('Edit').click();
+  if (helperVisible) {
     cy.get('.opacity-100').click();
     cy.wait(2000);
   }
-  if(ifClear){
+  if (ifClear) {
     cy.get(selector).clear();
   } else {
     cy.get(selector).click();
   }
 
-  cy.contains("Save").click();
+  cy.contains('Save').click();
   cy.wait(2000);
-  cy.contains("Download CV").click();
-  cy.contains(`${errorMessage} in your Profile to download the CV`)
-      .should('be.visible');
+  cy.contains('Download CV').click();
+  cy.contains(`${errorMessage} in your Profile to download the CV`).should('be.visible');
 });
 
-=======
 Cypress.Commands.add('searchInfoHub', (searchValue) => {
   // must be logged in
   cy.contains('Information Hub').click();
@@ -260,4 +257,3 @@ Cypress.Commands.add('searchInfoHub', (searchValue) => {
   cy.get('input[name="search"]').type(searchValue);
   cy.get('.mx-10 > .flex').click();
 });
-
